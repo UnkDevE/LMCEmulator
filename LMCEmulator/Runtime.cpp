@@ -1,5 +1,6 @@
 #include "Runtime.h"
 
+// runs the program
 status Runtime::run()
 {
 	for (bool hlt = false; !hlt;) {
@@ -17,6 +18,7 @@ status Runtime::run()
 	return SUCCESS;
 }
 
+// runs the specified mnemonic
 status Runtime::runMnemonic(mnemonic Mnemonic, int data)
 {
 	switch (Mnemonic) {
@@ -103,7 +105,7 @@ status Runtime::brz(int address) noexcept
 
 status Runtime::brp(int address) noexcept
 {
-	if (ACC > 0) {
+	if (ACC >= 0) {
 		PC = address;
 	}
 	return SUCCESS;

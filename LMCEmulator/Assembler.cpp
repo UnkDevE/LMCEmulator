@@ -1,5 +1,6 @@
 #include "Assembler.h"
 
+// assemble the lmc code
 RAM Assembler::assembleProgram()
 {
 	RAM ram = RAM();
