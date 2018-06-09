@@ -147,7 +147,9 @@
   <ItemGroup>
     <ClCompile Include="Assembler.cpp" />
     <ClCompile Include="Line.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="RAM.cpp" />
+    <ClCompile Include="Runtime.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

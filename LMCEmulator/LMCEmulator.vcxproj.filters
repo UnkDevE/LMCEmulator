@@ -38,5 +38,11 @@
     <ClCompile Include="Line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Runtime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 #include <string>
 
 enum mnemonic { HLT = 0, ADD = 1, SUB = 2, STA = 3, 
-		LDA = 5, BRA = 6, BRZ = 7, BRP = 8, DAT = 9, UNDEFINED};
+		LDA = 5, BRA = 6, BRZ = 7, BRP = 8, DAT = 9, INP = 901, OUT = 902, UNDEFINED};
 
 class Line {
 public:
@@ -17,15 +17,19 @@ public:
 	~Line() {}
 
 	Line(int machineCode) {
-		auto machineStr = std::to_string(machineCode);
-		Mnemonic = static_cast<mnemonic>(static_cast<int>(machineStr[0] - '0'));
-		address = stoi(machineStr.substr(machineStr.size() - 1));
+		if (machineCode == 901) Mnemonic = INP;
+		else if (machineCode == 902) Mnemonic = OUT;
+		else {
+			auto machineStr = std::to_string(machineCode);
+			Mnemonic = static_cast<mnemonic>(static_cast<int>(machineStr[0] - '0'));
+			address = stoi(machineStr.substr(machineStr.size() - 1));
+		}
 	}
 
 	int toMachineCode();
 	std::string getLabel() { return label; }
 	mnemonic getMnemonic() { return Mnemonic; }
-	int getaddress() { return address; }
+	int getAddress() { return address; }
 
 private:
 	

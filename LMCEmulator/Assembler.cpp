@@ -2,7 +2,11 @@
 
 RAM Assembler::assembleProgram()
 {
-	return RAM();
+	RAM ram = RAM();
+	for (unsigned i = 0; i < lines.size(); i++) {
+		ram.setAddressData(i, lines[i].toMachineCode());
+	}
+	return ram;
 }
 
 // get strings in string seperated by ' '
@@ -35,7 +39,7 @@ Line Assembler::wordsToLine(std::vector<std::string> words)
 		if (mnemonic == UNDEFINED) {
 			mnemonic = toMnemonic(word);
 		}
-		else if (mnemonic == UNDEFINED) {
+		if (mnemonic == UNDEFINED) {
 			label = word;
 		}
 		else {
@@ -87,7 +91,7 @@ void Assembler::populateData()
 	while (std::getline(file, linestr)){
 		Line line = wordsToLine(getWords(linestr));
 		if (line.getLabel() != "") {
-			labels[line.getLabel()] = line.getaddress();
+			labels[line.getLabel()] = line.getAddress();
 		}
 		lines.push_back(line);
 	}

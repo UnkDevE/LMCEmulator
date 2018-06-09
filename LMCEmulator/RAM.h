@@ -4,8 +4,8 @@
 class RAM {
 
 public:
-	int getAdressData(int address);
-	void setAdressData(int address, int data);
+	int getAddressData(int address);
+	void setAddressData(int address, int data);
 
 private:
 	std::map<int, int> addresses;

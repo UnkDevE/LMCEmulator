@@ -1,11 +1,11 @@
 #include "RAM.h"
 
-int RAM::getAdressData(int address)
+int RAM::getAddressData(int address)
 {
 	return addresses[address];
 }
 
-void RAM::setAdressData(int address, int data)
+void RAM::setAddressData(int address, int data)
 {
 	addresses[address] = data;
 }
