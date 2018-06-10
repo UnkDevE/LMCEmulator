@@ -23,9 +23,14 @@ class Assembler {
 public:
 	Assembler(std::string filename) {
 		file.open(filename, std::ios::in);
+		populateData();
 	}
 
 	RAM assembleProgram();
+
+	~Assembler() {
+		file.close();
+	}
 
 private:
 	std::vector<std::string> getWords(std::string str);
