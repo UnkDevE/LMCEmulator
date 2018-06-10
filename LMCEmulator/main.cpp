@@ -2,12 +2,13 @@
 
 int main(int argc, char ** argv)
 {
+
 	if (argc < 2) {
-		std::cout << "please give a file containing LMC code to run" << std::endl;
+		std::cout << "no file given to emulate lmc code." << std::endl;
 	}
 	else {
-		Assembler assembler = Assembler(std::string(argv[1]));
-		Runtime runtime(assembler.assembleProgram());
+		Assembler* assembler = new Assembler(std::string(argv[1]));
+		Runtime runtime(assembler->assembleProgram());
 
 		try {
 			runtime.run();

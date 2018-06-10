@@ -13,6 +13,7 @@ status Runtime::run()
 			throw "FAIURE at LINE " + Mnemonics[mnemonicNo] +
 				" " + std::to_string(line.getAddress());
 		}
+		++PC;
 	}
 
 	return SUCCESS;

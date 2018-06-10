@@ -1,0 +1,7 @@
+INP
+STA X
+INP 
+ADD X
+OUT
+HLT
+X DAT 90

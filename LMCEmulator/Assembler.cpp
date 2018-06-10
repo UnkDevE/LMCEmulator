@@ -24,6 +24,7 @@ std::vector<std::string> Assembler::getWords(std::string str)
 			word = "";
 		}
 	}
+	words.push_back(word);
 
 	return words;
 }
@@ -48,7 +49,7 @@ Line Assembler::wordsToLine(std::vector<std::string> words)
 				address = stoi(word);
 			}
 			catch (std::invalid_argument) {
-				if(labels.count(word) > 0) address = labels[word];
+				if (labels.count(word) > 0) address = labels[word];
 			}
 		}
 	}
@@ -77,23 +78,41 @@ std::string Assembler::toUpper(std::string str)
 mnemonic Assembler::toMnemonic(std::string str)
 {
 	str = toUpper(str);
-	
-	for (unsigned i = 0; i < Mnemonics.size(); i++){
-		if (str == Mnemonics[i]) return static_cast<mnemonic>(i);
+
+	for (unsigned i = 0; i < Mnemonics.size(); i++) {
+		if (str == Mnemonics[i]) {
+			if (i > 8) {
+				if (i == 9) return INP;
+				if (i == 10) return OUT;
+			}
+			else if (i > 3) {
+				return static_cast<mnemonic>(i + 1);
+			}
+			else {
+				return static_cast<mnemonic>(i);
+			}
+		}
 	}
 
 	return UNDEFINED;
 }
 
-// populate the class
-void Assembler::populateData()
+// populate the labels map with select lines
+void Assembler::populateLabels()
 {
 	std::string linestr = "";
-	while (std::getline(file, linestr)){
-		Line line = wordsToLine(getWords(linestr));
-		if (line.getLabel() != "") {
+	while (std::getline(file, linestr)) {
+		if (getWords(linestr).size() > 2){
+			Line line = wordsToLine(getWords(linestr));
 			labels[line.getLabel()] = line.getAddress();
 		}
-		lines.push_back(line);
+	}
+}
+
+void Assembler::populateLines() {
+	std::string linestr = "";
+	while (std::getline(file, linestr)) {
+		Line line = wordsToLine(getWords(linestr));
+		if (line.getMnemonic() != DAT) lines.push_back(line);
 	}
 }

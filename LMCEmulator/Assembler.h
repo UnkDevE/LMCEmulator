@@ -16,27 +16,34 @@ const std::vector<std::string> Mnemonics = std::vector<std::string>{
 	"BRA",
 	"BRZ",
 	"BRP",
-	"DAT"
+	"DAT",
+	"INP",
+	"OUT"
 };
 
 class Assembler {
 public:
 	Assembler(std::string filename) {
 		file.open(filename, std::ios::in);
-		populateData();
+		populateLabels();
+		// reset file to beginning
+		file.clear();
+		file.seekg(0, std::ios::beg);
+		
+		populateLines();
+		file.close();
 	}
 
 	RAM assembleProgram();
 
-	~Assembler() {
-		file.close();
-	}
+	~Assembler() {}
 
 private:
 	std::vector<std::string> getWords(std::string str);
 	Line wordsToLine(std::vector<std::string> words);
 	mnemonic toMnemonic(std::string str);
-	void populateData();
+	void populateLines();
+	void populateLabels();
 
 	std::vector<Line> lines;
 	std::string toUpper(std::string str);
