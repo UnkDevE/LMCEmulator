@@ -101,10 +101,16 @@ mnemonic Assembler::toMnemonic(std::string str)
 void Assembler::populateLabels()
 {
 	std::string linestr = "";
-	while (std::getline(file, linestr)) {
+	for (int lineNum = 0; std::getline(file, linestr); lineNum++) {
 		if (getWords(linestr).size() > 2){
 			Line line = wordsToLine(getWords(linestr));
-			labels[line.getLabel()] = line.getAddress();
+			if (line.getMnemonic() == DAT) {
+				labels[line.getLabel()] = line.getAddress();
+			}
+			else {
+				labels[line.getLabel()] = lineNum;
+			}
+			
 		}
 	}
 }
