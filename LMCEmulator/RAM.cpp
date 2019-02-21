@@ -1,8 +1,10 @@
 #include "RAM.h"
 
-int RAM::getAddressData(int address)
+std::optional<int> RAM::getAddressData(int address)
 {
-	return addresses[address];
+    if (addressess.find(address) != addressess.end())
+        return addresses[address];
+    return {};
 }
 
 void RAM::setAddressData(int address, int data)

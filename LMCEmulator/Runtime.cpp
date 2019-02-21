@@ -5,12 +5,14 @@ status Runtime::run()
 {
 	for (bool hlt = false; !hlt;) {
 		Line line(ram.getAddressData(PC));
+
 		if (line.getMnemonic() == HLT) hlt = true;
+
 		if(runMnemonic(line.getMnemonic(), line.getAddress()) == FAILURE){
 			unsigned mnemonicNo = static_cast<unsigned>(line.getMnemonic());
 			if (static_cast<int>(line.getMnemonic()) > 4) --mnemonicNo;
 			
-			throw "FAIURE at LINE " + Mnemonics[mnemonicNo] +
+			throw "FAILURE at LINE " + Mnemonics[mnemonicNo] +
 				" " + std::to_string(line.getAddress());
 		}
 		++PC;
@@ -48,46 +50,29 @@ status Runtime::runMnemonic(mnemonic Mnemonic, int data)
 
 status Runtime::add(int address) noexcept
 {
-	try {
-		ACC += ram.getAddressData(address);
-	}
-	catch (std::exception e) {
-		return FAILURE;
-	}
+    ACC += ram.getAddressData(address).value_or(0);
 	return SUCCESS;
 }
 
 status Runtime::sub(int address) noexcept
 {
-	try{
-		ACC -= ram.getAddressData(address);
-	}
-	catch (std::exception e) {
-		return FAILURE;
-	}
+    ACC -= ram.getAddressData(address).value_or(0);
 	return SUCCESS;
 }
 
 status Runtime::sta(int address) noexcept
 {
-	try{
-		ram.setAddressData(address, ACC);
-	}
-	catch (std::exception e) {
-		return FAILURE;
-	}
+    ram.setAddressData(address, ACC);
 	return SUCCESS;
 }
 
 status Runtime::lda(int address) noexcept
 {
-	try{
-		ACC = ram.getAddressData(address);
-	}
-	catch (std::exception e) {
-		return FAILURE;
-	}
-	return SUCCESS;
+    if(auto op = ram.getAddressData(address)){
+        ACC = *op;
+        return SUCCESS;
+    }
+    else return FAILURE;
 }
 
 status Runtime::bra(int address) noexcept

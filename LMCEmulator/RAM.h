@@ -1,10 +1,11 @@
 #pragma once
 #include <map>
+#include <expermental/optional>
 
 class RAM {
 
 public:
-	int getAddressData(int address);
+    std::optional<int> getAddressData(int address);
 	void setAddressData(int address, int data);
 
 private:
